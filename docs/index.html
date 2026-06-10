@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Energy Prediction and Real-Time Streaming Portfolio</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">Big Data • PySpark • Kafka • Real-Time ML</span>
+      <h1>Building Energy Prediction and Real-Time Streaming Portfolio</h1>
+      <p class="lead">This portfolio demonstrates an end-to-end big data pipeline for building energy analytics. The project starts with batch preprocessing using PySpark to clean, join, and transform building, meter, and weather datasets into six-hour energy features. A Gradient-Boosted Tree model is then trained to predict building energy consumption and evaluated against alternative approaches. The real-time section simulates weather data production using Kafka, ingests the stream with Spark Structured Streaming, enriches it with static building metadata, applies the trained model, and writes prediction outputs to Parquet and Kafka topics. Finally, Kafka consumers visualize live prediction trends, energy aggregation, and daily shortfall or excess energy. Overall, it shows practical capability in PySpark, Kafka, streaming architecture, machine learning, and real-time operational monitoring.</p>
+      <div class="pill-row">
+        <span class="pill">PySpark</span>
+        <span class="pill">Spark Structured Streaming</span>
+        <span class="pill">Kafka</span>
+        <span class="pill">GBT Regression</span>
+        <span class="pill">Real-time visualization</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>End-to-End Architecture</h2>
+      <div class="flow"><pre class="mermaid">flowchart LR
+    A[Raw datasets&lt;br/&gt;Building + meter + weather] --&gt; B[PySpark batch preprocessing]
+    B --&gt; C[Feature engineering&lt;br/&gt;6-hour energy + weather aggregation]
+    C --&gt; D[Model training&lt;br/&gt;GBT energy prediction model]
+    D --&gt; E[Saved ML pipeline model]
+
+    F[Simulated weather records&lt;br/&gt;every 5 seconds] --&gt; G[Kafka topic&lt;br/&gt;weather5s]
+    G --&gt; H[Spark Structured Streaming]
+    H --&gt; I[Streaming enrichment&lt;br/&gt;schema + static joins + feature preparation]
+    E --&gt; J[Real-time prediction]
+    I --&gt; J
+    J --&gt; K[Streaming Parquet outputs]
+    J --&gt; L[Kafka output topics&lt;br/&gt;predictions5s + energyagg7s + dailyenergy14s]
+    L --&gt; M[Kafka consumers]
+    M --&gt; N[Real-time visualization&lt;br/&gt;prediction trend + aggregation + shortfall/excess]
+</pre></div>
+    </section>
+
+    <section>
+      <h2>Batch Processing Path</h2>
+      <div class="flow"><pre class="mermaid">flowchart TD
+    A[Load historical data] --&gt; B[Define schema]
+    B --&gt; C[Clean and transform data]
+    C --&gt; D[Impute missing weather values]
+    D --&gt; E[Aggregate meter data into energy_6h]
+    E --&gt; F[Join building, meter, and weather features]
+    F --&gt; G[EDA and feature selection]
+    G --&gt; H[Train and compare ML models]
+    H --&gt; I[Save best model for streaming inference]
+</pre></div>
+    </section>
+
+    <section>
+      <h2>Real-Time Streaming Path</h2>
+      <div class="flow"><pre class="mermaid">sequenceDiagram
+    participant P as Kafka Producer
+    participant K as Kafka Topic: weather5s
+    participant S as Spark Structured Streaming
+    participant M as Saved GBT Model
+    participant O as Kafka/Parquet Outputs
+    participant V as Visualization Consumer
+
+    P-&gt;&gt;K: Publish simulated weather batch
+    K-&gt;&gt;S: Stream records
+    S-&gt;&gt;S: Parse schema + join static building data
+    S-&gt;&gt;M: Apply trained model
+    M--&gt;&gt;S: Return energy prediction
+    S-&gt;&gt;O: Write predictions and aggregations
+    O-&gt;&gt;V: Consume live outputs
+    V-&gt;&gt;V: Plot real-time trend and shortfall/excess
+</pre></div>
+    </section>
+
+    <section>
+      <h2>Interactive Project Details</h2>
+      <p class="lead">Expand each section to view the objective, technical highlights, skills, and notebook output.</p>
+      
+<details>
+  <summary>1. Data Preprocessing</summary>
+  <p><strong>Objective:</strong> Prepare and analyze large-scale historical data using Spark RDDs, DataFrames, and Spark SQL.</p>
+  <p><strong>Technical highlights:</strong></p>
+  <ul><li>RDD and partitioning</li><li>DataFrame transformation</li><li>Spark SQL comparison</li><li>Batch analytics foundation</li></ul>
+  <div class="pill-row"><span class="pill">PySpark</span><span class="pill">RDD</span><span class="pill">DataFrame</span><span class="pill">Spark SQL</span><span class="pill">EDA</span></div>
+  <p><a href="notebooks/01_data_preprocessing.html">Open web notebook →</a></p>
+</details>
+
+
+<details>
+  <summary>2. Building Energy Prediction Model</summary>
+  <p><strong>Objective:</strong> Create six-hour energy features, evaluate drivers of consumption, and train a building energy prediction model.</p>
+  <p><strong>Technical highlights:</strong></p>
+  <ul><li>Schema definition</li><li>Weather imputation</li><li>Feature engineering</li><li>GBT model training</li><li>Model evaluation</li></ul>
+  <div class="pill-row"><span class="pill">PySpark ML</span><span class="pill">Feature engineering</span><span class="pill">GBT</span><span class="pill">RMSLE</span><span class="pill">Energy analytics</span></div>
+  <p><a href="notebooks/02_building_energy_prediction_model.html">Open web notebook →</a></p>
+</details>
+
+
+<details>
+  <summary>3A. Produce Streaming Data</summary>
+  <p><strong>Objective:</strong> Simulate live weather data by publishing records to a Kafka topic at a fixed interval.</p>
+  <p><strong>Technical highlights:</strong></p>
+  <ul><li>Kafka producer</li><li>Weather batch simulation</li><li>JSON message payload</li><li>Real-time source generation</li></ul>
+  <div class="pill-row"><span class="pill">Kafka</span><span class="pill">Python</span><span class="pill">Streaming simulation</span></div>
+  <p><a href="notebooks/03a_produce_streaming_data.html">Open web notebook →</a></p>
+</details>
+
+
+<details>
+  <summary>3B. Stream and Predict Real-Time Data</summary>
+  <p><strong>Objective:</strong> Consume Kafka messages with Spark Structured Streaming, process features, apply the saved model, and publish outputs.</p>
+  <p><strong>Technical highlights:</strong></p>
+  <ul><li>Kafka source</li><li>Structured Streaming</li><li>Static + streaming joins</li><li>Real-time prediction</li><li>Parquet and Kafka sinks</li></ul>
+  <div class="pill-row"><span class="pill">Spark Structured Streaming</span><span class="pill">Kafka</span><span class="pill">PySpark ML</span><span class="pill">Parquet</span></div>
+  <p><a href="notebooks/03b_stream_predict_realtime_data.html">Open web notebook →</a></p>
+</details>
+
+
+<details>
+  <summary>3C. Real-Time Visualization</summary>
+  <p><strong>Objective:</strong> Consume prediction and aggregation topics to visualize live building-energy behavior.</p>
+  <p><strong>Technical highlights:</strong></p>
+  <ul><li>Kafka consumers</li><li>Live trend plotting</li><li>Prediction vs actual comparison</li><li>Shortfall/excess energy monitoring</li></ul>
+  <div class="pill-row"><span class="pill">Kafka consumer</span><span class="pill">Pandas</span><span class="pill">Matplotlib</span><span class="pill">Operational dashboarding</span></div>
+  <p><a href="notebooks/03c_realtime_visualization.html">Open web notebook →</a></p>
+</details>
+
+    </section>
+
+    <section>
+      <h2>Repository Setup Steps</h2>
+      <div class="flow"><pre class="mermaid">flowchart TD
+    A[Create new GitHub repository] --&gt; B[Add MIT License]
+    B --&gt; C[Create portfolio folder structure]
+    C --&gt; D[Add .gitignore and requirements.txt]
+    D --&gt; E[Move notebooks into notebooks/]
+    E --&gt; F[Export notebooks to docs/notebooks/ HTML]
+    F --&gt; G[Create docs/index.html landing page]
+    G --&gt; H[Push to GitHub]
+    H --&gt; I[Enable GitHub Pages from main /docs]
+</pre></div>
+      <div class="grid">
+        <div class="card half">
+          <h3>GitHub Pages</h3>
+          <p>Use <strong>Settings → Pages → Deploy from a branch</strong>, then select <strong>main</strong> and <strong>/docs</strong>.</p>
+        </div>
+        <div class="card half">
+          <h3>Notebook Updates</h3>
+          <p>After editing notebooks, regenerate the HTML pages:</p>
+          <pre class="code">jupyter nbconvert --to html notebooks/*.ipynb --output-dir docs/notebooks</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <p>Prepared as a GitHub portfolio project for building energy analytics, batch big data processing, real-time streaming, machine learning inference, and visualization.</p><p>Note: the producer notebook HTML is exported without stored outputs to keep the site lightweight; the original notebook is preserved in the repository.</p>
+    </section>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "default" });
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Data and model artifacts
+data/raw/*
+data/processed/*
+models/*
+outputs/*
+checkpoints/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+!outputs/.gitkeep
+!checkpoints/.gitkeep
+
+# Spark / Hadoop temporary files
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+_SUCCESS
+*.parquet
+*.orc
+*.avro
+
+# Logs
+*.log
+logs/
