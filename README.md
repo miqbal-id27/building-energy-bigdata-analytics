@@ -102,18 +102,6 @@ building-energy-realtime-portfolio/
 | 3B | `03b_stream_predict_realtime_data.ipynb` | Consume Kafka stream, process features, predict, and output streams | `docs/notebooks/03b_stream_predict_realtime_data.html` |
 | 3C | `03c_realtime_visualization.ipynb` | Consume prediction topics and visualize results in real time | `docs/notebooks/03c_realtime_visualization.html` |
 
-## Skills Demonstrated
+## Tech Stack
 
-- PySpark RDD, DataFrame, and Spark SQL processing
-- Big data feature engineering
-- Building energy consumption prediction
-- Gradient-Boosted Tree regression
-- Kafka producer and consumer design
-- Spark Structured Streaming
-- Streaming Parquet and Kafka sinks
-- Real-time visualization
-- Data ethics, privacy, and security awareness
-
-The `data/`, `models/`, `outputs/`, and `checkpoints/` folders are intentionally ignored by Git to avoid uploading large or sensitive files. Add small sample data only if it is safe and allowed to share.
-
-The HTML page for `03a_produce_streaming_data.ipynb` is exported without stored notebook outputs to keep the web portfolio lightweight. The original notebook remains available in `notebooks/`.
+Python · PySpark · Spark SQL · Spark Structured Streaming · Kafka · Machine Learning · Parquet · 
